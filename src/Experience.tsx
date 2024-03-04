@@ -29,7 +29,7 @@ function Experience() {
     }]
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: 2,
+        id: 3,
         data: {
             supports: 'type3',
         },
@@ -41,6 +41,7 @@ function Experience() {
 
 
     return (< section style={style} ref={setNodeRef} className="experience section" >
+        <span className="drag-me">DRAG ME</span>
         <div {...listeners} {...attributes} className="section-inner shadow-sm rounded" >
             <h2 className="heading" > Work Experience </h2>
             < div className="content" >

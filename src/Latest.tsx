@@ -29,7 +29,7 @@ function Latest() {
 
     const [subfeaturedSecs, setSubFeatured] = useState(subfeatured)
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: 1,
+        id: 2,
         data: {
             supports: 'type3',
         },
@@ -41,6 +41,7 @@ function Latest() {
 
 
     return (<section style={style} ref={setNodeRef} className="latest section" >
+        <span className="drag-me">DRAG ME</span>
         <div {...listeners} {...attributes} className="section-inner shadow-sm rounded" >
             <h2 className="heading" > Latest Projects </h2>
             <div className="content" >

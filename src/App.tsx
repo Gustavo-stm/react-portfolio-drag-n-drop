@@ -10,6 +10,9 @@ import Testimonials from './Testimonials.tsx'
 import BasicInfo from './BasicInfo.tsx'
 import Latest from './Latest.tsx'
 import { DndContext, useDroppable, DragOverlay } from '@dnd-kit/core'
+import {
+  restrictToVerticalAxis
+} from '@dnd-kit/modifiers';
 import './assets_two/css/styles.css'
 
 const App = () => {
@@ -17,7 +20,7 @@ const App = () => {
   const [activeId, setActiveId] = useState(null);
   const [items, setItems] = useState([<About />, <Latest />, <Experience />])
   const [indexes, setIndexes] = useState([0, 1, 2])
-  const { nodeRef, setNodeRef } = useDroppable({
+  const { setNodeRef } = useDroppable({
     id: 'droppable',
     data: {
       type: 'type3',
@@ -31,17 +34,17 @@ const App = () => {
   function handleDragEnd(event) {
 
     let deltaY = event.delta.y
-    let contHeight = 1000
 
+    let contHeight = 1000
     if (deltaY < 0) {
       let draggableFinalIndex;
       let diff = contHeight + deltaY
 
       let newIndexes = [...indexes]
       indexes.forEach((ind, i) => {
-        if (ind === activeId) {
+        if (ind + 1 === activeId) {
           newIndexes.splice(i, 1)
-          draggableFinalIndex = diff < 600 ? i - 2 : i - 1
+          draggableFinalIndex = diff > 600 ? i : diff > 400 ? i - 1 : i - 2
           newIndexes.splice(draggableFinalIndex, 0, ind)
         }
       })
@@ -52,12 +55,12 @@ const App = () => {
     else {
       let draggableFinalIndex;
       let diff = contHeight - deltaY
-
       let newIndexes = [...indexes]
+
       indexes.forEach((ind, i) => {
-        if (ind === activeId) {
+        if (ind + 1 === activeId) {
           newIndexes.splice(i, 1)
-          draggableFinalIndex = diff > 600 ? i + 2 : i + 1
+          draggableFinalIndex = diff > 600 ? i : diff > 400 ? i + 1 : i + 2
           newIndexes.splice(draggableFinalIndex, 0, ind)
         }
       })
@@ -81,11 +84,17 @@ const App = () => {
       <div className="container sections-wrapper py-5" >
         <div className="row" >
           <div className="primary col-lg-8 col-12" >
-            <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+            <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
               <div id="drag-container" ref={setNodeRef}>
 
                 {indexes && indexes.map((ind) => { return items[ind] })
                 }
+                <DragOverlay>
+                  {indexes && indexes.map((ind) => {
+                    if (ind === (activeId - 1)) return items[ind]
+                  })
+                  }
+                </DragOverlay>
               </div>
             </DndContext>
           </div>

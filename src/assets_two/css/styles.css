@@ -214,18 +214,50 @@ a.dotted-link:hover {
   width: 100vw
 }
 
-#drag-container {
+/* #drag-container {
   position: relative;
 }
 
 .section .heading.draggable {
   position: relative;
-}
+} */
 
 
 /* ======= Sections======= */
 .section {
   margin-bottom: 30px;
+}
+
+.section:hover {
+  border: 2px solid lightgreen;
+
+  & .drag-me {
+    display: block;
+    width: 100%;
+    background-color: rgb(190, 188, 188);
+    animation: 3s blinking infinite;
+    font-weight: bold;
+    color: green;
+  }
+}
+
+.section span.drag-me {
+
+  opacity: 0;
+}
+
+@keyframes blinking {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 .section .section-inner {
