@@ -25,9 +25,21 @@ const SubFeatured = ({ info }: { info: Info }) => {
     )
 }
 
-function Latest() {
+type SubFeaturedInfo = {
+    title: string;
+    // Add any other required fields with their respective types
+    image: string;
+    description: string;
+    more_link: {
+        href: string;
+        text: string;
+    }
+}
 
-    const [subfeaturedSecs, setSubFeatured] = useState(subfeatured)
+
+function Latest(): JSX.Element {
+
+    const [subfeaturedSecs, setSubFeatured] = useState<SubFeaturedInfo[]>(subfeatured);
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: 2,
         data: {
@@ -35,7 +47,7 @@ function Latest() {
         },
     });
 
-    const style = {
+    const style: React.CSSProperties = {
         transform: CSS.Translate.toString(transform),
     };
 

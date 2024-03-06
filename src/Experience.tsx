@@ -3,15 +3,25 @@ import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities';
 
 
-function Experience() {
+type WorkExperience = {
+    title: string;
+    company: string;
+    description: string;
+    period: string;
+};
 
-    const workExperience = [{
+type ExperienceProps = {
+    // define any props here
+};
+
+function Experience({ /* add any props here */ }: ExperienceProps): JSX.Element {
+    const workExperience: WorkExperience[] = [{
         title: "Web development Instructor",
         company: "Skta Maria Folkhögskola",
         description: `Instructing adults in web dev main technologies for modern web applications using SQL and noSQL databases. 
         Leading online courses`
-        , period: `(2021 -
-        Present)`},
+        , period: `(2021 - Present)`
+    },
     {
         title: "Intern",
         company: "Cirk-l Workwear",
@@ -26,7 +36,7 @@ function Experience() {
         description: `Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet
         adipiscing sem neque sed ipsum.`
         , period: `(oct - dec 2020)`
-    }]
+    }];
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: 3,
@@ -35,27 +45,32 @@ function Experience() {
         },
     });
 
-    const style = {
+    const style: React.CSSProperties = {
         transform: CSS.Translate.toString(transform),
     };
 
-
-    return (< section style={style} ref={setNodeRef} className="experience section" >
-        <span className="drag-me">DRAG ME</span>
-        <div {...listeners} {...attributes} className="section-inner shadow-sm rounded" >
-            <h2 className="heading" > Work Experience </h2>
-            < div className="content" >
-                {workExperience.map(exp => {
-                    return (<div key={exp.company} className="item">
-                        <h3 className="title">{exp.title}<span className="place">{exp.company}</span>
-                            <span className="year">{exp.period}</span>
-                        </h3>
-                        <p>{exp.description}</p>
-                    </div>)
-                })}
+    return (
+        <section style={style} ref={setNodeRef} className="experience section">
+            <span className="drag-me">DRAG ME</span>
+            <div {...listeners} {...attributes} className="section-inner shadow-sm rounded">
+                <h2 className="heading">Work Experience</h2>
+                <div className="content">
+                    {workExperience.map(exp => {
+                        return (
+                            <div key={exp.company} className="item">
+                                <h3 className="title">
+                                    {exp.title}
+                                    <span className="place">{exp.company}</span>
+                                    <span className="year">{exp.period}</span>
+                                </h3>
+                                <p>{exp.description}</p>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
-        </div>
-    </section>)
+        </section>
+    );
 }
 
 export default Experience
