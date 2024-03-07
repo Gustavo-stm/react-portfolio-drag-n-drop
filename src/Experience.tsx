@@ -52,7 +52,7 @@ function Experience({ /* add any props here */ }: ExperienceProps): JSX.Element 
     return (
         <section style={style} ref={setNodeRef} className="experience section">
             <span className="drag-me">DRAG ME</span>
-            <div {...listeners} {...attributes} className="section-inner shadow-sm rounded">
+            <div {...listeners} {...attributes}>
                 <h2 className="heading">Work Experience</h2>
                 <div className="content">
                     {workExperience.map(exp => {

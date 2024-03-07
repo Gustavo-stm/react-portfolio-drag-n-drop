@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import subfeatured from './data.js'
-import projectFeatured from './assets_two/images/projects/project-featured.jpg'
+import like from "./assets/images/like.png"
+import minButik from "./assets/images/projects/min-butik.png"
+import more_link from "./assets/images/foreign.png"
+
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities';
 
@@ -12,14 +15,22 @@ interface Info {
 
 const SubFeatured = ({ info }: { info: Info }) => {
 
-    return (<div className="item row" >
-        <a className="col-md-4 col-12" href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/" target="" >
-            <img className="img-fluid project-image rounded shadow-sm" src={info.image} alt="project name" />
+    return (<div className="item">
+        <a
+            href="https://themes.3rdwavemedia.com/bootstrap-templates/resume/devcard-bootstrap-4-vcard-portfolio-template-for-software-developers/"
+            target="">
+            <img className="img-fluid project-image rounded shadow-sm"
+                src={info.image} alt="project name" />
         </a>
-        < div className="desc col-md-8 col-12" >
-            <h3 className="title" > <a href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/" target="" >{info.title} </a></h3 >
-            <p className="mb-2" > {info.description} </p>
-            < p > <a className="more-link" href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/" target="" > <i className="fas fa-external-link-alt" > </i>Find out more</a > </p>
+        <div className="desc">
+            <h3 className="title"><a
+                href="https://themes.3rdwavemedia.com/bootstrap-templates/resume/devcard-bootstrap-4-vcard-portfolio-template-for-software-developers/"
+                target="">{info.title}</a></h3>
+            <p>{info.description}</p>
+            <p><a className="more-link"
+                href={info.more_link.href}
+                target=""><img className="external-link"
+                    src={more_link} />Find out more</a></p>
         </div>
     </div>
     )
@@ -54,24 +65,33 @@ function Latest(): JSX.Element {
     return (<section style={style} ref={setNodeRef} className="latest section" >
         <span className="drag-me">DRAG ME</span>
         <div {...listeners} {...attributes} className="section-inner shadow-sm rounded" >
-            <h2 className="heading" > Latest Projects </h2>
-            <div className="content" >
-                <div className="item featured text-center" >
-                    <div className="featured-image has-ribbon" >
-                        <a href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/launch-bootstrap-4-template-for-saas-businesses/" target="" >
-                            <img className="img-fluid project-image rounded shadow-sm" src={projectFeatured} alt="project name" />
-                        </a>
-                        < div className="ribbon" >
-                            <div className="text" > New </div>
-                        </div>
+            <h2 className="heading">Latest Projects</h2>
+            <div className="item featured">
+                <div className="featured-image has-ribbon">
+                    <a href="https://min-butik.catala-sverdrup.se" target="">
+                        <img className="img-fluid project-image rounded shadow-sm"
+                            src={minButik} alt="project name" />
+                    </a>
+                    <div className="ribbon">
+                        <div className="text">New</div>
                     </div>
-                    < h3 className="title mb-3" > <a href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/launch-bootstrap-4-template-for-saas-businesses/" target="" > Launch - The perfect Bootstrap template for SaaS products </a></h3>
-                    <div className="desc text-start" >
-                        <p>You can promote your main project here.Suspendisse in tellus dolor.Vivamus a tortor eu turpis pharetra consequat quis non metus.Aliquam aliquam, orci eu suscipit pellentesque, mauris dui tincidunt enim, eget iaculis ante dolor non turpis.Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
-                    </div>
-                    < a className="btn btn-cta-secondary" href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/launch-bootstrap-4-template-for-saas-businesses/" target="" > <i className="fas fa-thumbs-up" > </i> Back my project</a >
                 </div>
-                < hr className="divider" />
+
+                <h3 className="title"><a href="https://min-butik.catala-sverdrup.se" target="">Mathem
+                    Clone - A copy of the popular Swedish company of food
+                    delivery</a></h3>
+
+                <div className="desc">
+                    <p>For this project I worked specifically with vanilla Javascript and Typescript.
+                        The product cards design was coded by my fellow co-worker at Sankta Maria, Mr.
+                        Lars Holmqvist. It was a cool project where my favorite part was coding the cart
+                        functionality.</p>
+                </div>
+                <a className="btn" href="https://min-butik.catala-sverdrup.se"
+                    target=""><img src={like} />Check my project</a>
+            </div>
+            <hr />
+            <div className="secondary">
                 {subfeaturedSecs && subfeaturedSecs.map(sec => {
                     return (<div key={sec.title} > <SubFeatured info={sec} /></div >)
                 })}

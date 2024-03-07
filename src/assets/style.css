@@ -224,6 +224,25 @@ input:checked+.slider:before {
         background-color: #fff !important;
         padding: 20px;
         border-radius: 5px;
+
+        &:hover {
+            border: 2px solid lightgreen;
+
+            & .drag-me {
+                display: block;
+                width: 100%;
+                background-color: rgb(190, 188, 188);
+                animation: 3s blinking infinite;
+                font-weight: bold;
+                color: green;
+            }
+        }
+
+        & span.drag-me {
+
+            opacity: 0;
+        }
+
     }
 
     & .about p {
@@ -403,6 +422,19 @@ input:checked+.slider:before {
     } */
 }
 
+@keyframes blinking {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
 
 /*ASIDE SECTIONS */
 
@@ -751,8 +783,7 @@ footer {
     .main-container .row {
         display: grid;
         width: 100%;
-        grid-template-columns: 70% 25%;
-        gap: 10px;
+        grid-template-columns: 70% 30%;
         justify-content: space-around;
 
         & .first-sections {
@@ -765,7 +796,8 @@ footer {
         }
 
         & .first-sections .about,
-        .first-sections .latest {
+        .first-sections .latest,
+        .first-sections .experience {
             grid-column: span 2;
             width: 95%;
         }
@@ -817,11 +849,10 @@ footer {
     }
 
     & .aside-sections {
-        width: 90%;
+        width: 100%;
     }
 
     & .aside-sections aside:first-child {
         margin-top: 20px;
     }
-}
 }

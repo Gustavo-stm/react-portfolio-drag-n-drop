@@ -3,7 +3,8 @@ import { DndContext, useDroppable, DragOverlay } from '@dnd-kit/core'
 import {
   restrictToVerticalAxis
 } from '@dnd-kit/modifiers';
-import './assets_two/css/styles.css'
+// import './assets_two/css/styles.css'
+import './assets/style.css'
 
 import React, { useState } from 'react';
 import About from './About';
@@ -76,36 +77,32 @@ const App: React.FC<AppProps> = () => {
   return (
     <>
       <Header />
-      <div className="container sections-wrapper py-5" >
+      <div className="main-container sections-wrapper">
         <div className="row" >
-          <div className="primary col-lg-8 col-12" >
-            <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-              <div id="drag-container" ref={setNodeRef}>
+          <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+            <div className="first-sections" id="drag-container" ref={setNodeRef}>
 
-                {indexes && indexes.map((ind) => { return items[ind] })
+              {indexes && indexes.map((ind) => { return items[ind] })
+              }
+              <DragOverlay>
+                {indexes && indexes.map((ind) => {
+                  if (ind === (activeId - 1)) return items[ind]
+                })
                 }
-                <DragOverlay>
-                  {indexes && indexes.map((ind) => {
-                    if (ind === (activeId - 1)) return items[ind]
-                  })
-                  }
-                </DragOverlay>
-              </div>
-            </DndContext>
-          </div>
-        </div>
-        < div className="secondary col-lg-4 col-12" >
-          <div className="aside-sections">
-            <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+              </DragOverlay>
+            </div>
+          </DndContext>
+          <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+            <div className="aside-sections">
               <BasicInfo />
               <Skills />
               <Testimonials />
               <Education />
               <Languages />
-            </DndContext>
-          </div>
-        </div>
-      </div >
+            </div>
+          </DndContext>
+        </div >
+      </div>
       < Footer />
     </>
   )
