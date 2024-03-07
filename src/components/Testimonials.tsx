@@ -1,4 +1,4 @@
-import foreign from "./assets/images/foreign.png"
+import foreign from "../assets/images/foreign.png"
 function Testimonials() {
 
     return (<aside className="testimonials aside section">

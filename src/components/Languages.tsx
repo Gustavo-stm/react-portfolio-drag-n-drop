@@ -1,4 +1,4 @@
-import starimg from './assets/images/star.png'
+import starimg from '../assets/images/star.png'
 
 function Languages() {
 

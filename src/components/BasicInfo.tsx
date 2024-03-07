@@ -1,6 +1,6 @@
-import locationimg from "./assets/images/location.png"
-import emailImg from './assets/images/email.png'
-import linkimg from './assets/images/link.png'
+import locationimg from "../assets/images/location.png"
+import emailImg from '../assets/images/email.png'
+import linkimg from '../assets/images/link.png'
 
 function BasicInfo() {
 

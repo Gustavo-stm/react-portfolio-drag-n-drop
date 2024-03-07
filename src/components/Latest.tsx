@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import subfeatured from './data.js'
-import like from "./assets/images/like.png"
-import minButik from "./assets/images/projects/min-butik.png"
-import more_link from "./assets/images/foreign.png"
+import subfeatured from '../data.js'
+import like from "../assets/images/like.png"
+import minButik from "../assets/images/projects/min-butik.png"
+import more_link from "../assets/images/foreign.png"
 
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities';

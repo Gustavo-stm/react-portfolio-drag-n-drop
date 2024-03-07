@@ -3,19 +3,19 @@ import { DndContext, useDroppable, DragOverlay } from '@dnd-kit/core'
 import {
   restrictToVerticalAxis
 } from '@dnd-kit/modifiers';
-// import './assets_two/css/styles.css'
+
 import './assets/style.css'
 
 import React, { useState } from 'react';
-import About from './About';
-import Latest from './Latest';
-import Experience from './Experience';
+import About from './components/About';
+import Latest from './components/Latest';
+import Experience from './components/Experience';
 import Header from './Header';
-import BasicInfo from './BasicInfo';
-import Skills from './Skills';
-import Testimonials from './Testimonials';
-import Education from './Education';
-import Languages from './Languages';
+import BasicInfo from './components/BasicInfo';
+import Skills from './components/Skills';
+import Testimonials from './components/Testimonials';
+import Education from './components/Education';
+import Languages from './components/Languages';
 import Footer from './Footer';
 
 type AppProps = {};
