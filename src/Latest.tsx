@@ -27,7 +27,6 @@ const SubFeatured = ({ info }: { info: Info }) => {
 
 type SubFeaturedInfo = {
     title: string;
-    // Add any other required fields with their respective types
     image: string;
     description: string;
     more_link: {

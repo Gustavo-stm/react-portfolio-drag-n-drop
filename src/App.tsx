@@ -1,25 +1,29 @@
-import { useState } from 'react'
-import Header from './Header.tsx'
-import Footer from './Footer.tsx'
-import Experience from './Experience.tsx'
-import About from './About.tsx'
-import Skills from './Skills.tsx'
-import Languages from './Languages.tsx'
-import Education from './Education.tsx'
-import Testimonials from './Testimonials.tsx'
-import BasicInfo from './BasicInfo.tsx'
-import Latest from './Latest.tsx'
+
 import { DndContext, useDroppable, DragOverlay } from '@dnd-kit/core'
 import {
   restrictToVerticalAxis
 } from '@dnd-kit/modifiers';
 import './assets_two/css/styles.css'
 
-const App = () => {
+import React, { useState } from 'react';
+import About from './About';
+import Latest from './Latest';
+import Experience from './Experience';
+import Header from './Header';
+import BasicInfo from './BasicInfo';
+import Skills from './Skills';
+import Testimonials from './Testimonials';
+import Education from './Education';
+import Languages from './Languages';
+import Footer from './Footer';
 
-  const [activeId, setActiveId] = useState(null);
-  const [items, setItems] = useState([<About />, <Latest />, <Experience />])
-  const [indexes, setIndexes] = useState([0, 1, 2])
+type AppProps = {};
+
+const App: React.FC<AppProps> = () => {
+
+  const [activeId, setActiveId] = useState<number | null>(null);
+  const [items, setItems] = useState<React.ReactNode[]>([<About />, <Latest />, <Experience />])
+  const [indexes, setIndexes] = useState<number[]>([0, 1, 2])
   const { setNodeRef } = useDroppable({
     id: 'droppable',
     data: {
@@ -27,17 +31,17 @@ const App = () => {
     },
   });
 
-  function handleDragStart(event) {
+  function handleDragStart(event: any) {
     setActiveId(event.active.id);
   }
 
-  function handleDragEnd(event) {
+  function handleDragEnd(event: any) {
 
     let deltaY = event.delta.y
 
     let contHeight = 1000
     if (deltaY < 0) {
-      let draggableFinalIndex;
+      let draggableFinalIndex: number;
       let diff = contHeight + deltaY
 
       let newIndexes = [...indexes]
@@ -53,7 +57,7 @@ const App = () => {
     }
 
     else {
-      let draggableFinalIndex;
+      let draggableFinalIndex: number;
       let diff = contHeight - deltaY
       let newIndexes = [...indexes]
 
@@ -68,15 +72,6 @@ const App = () => {
       setIndexes(newIndexes)
     }
   }
-
-  // event.activatorEvent.target.style.position = "absolute";
-  // event.activatorEvent.target.style.top = event.delta.y + "!important"
-  // event.activatorEvent.target.style.left = event.delta.x + "!important"
-  // console.log(event.activatorEvent.target.style)
-  // if (over && active.data.current.supports.includes(over.data.current.type)) {
-  //   // do stuff
-  //   alert('hello')
-  // }
 
   return (
     <>
