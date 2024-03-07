@@ -13,7 +13,7 @@ function BasicInfo() {
 
     return (<aside className="pers-info aside section">
         <div className="section-inner">
-            <h2 className="heading sr-only">Basic Information</h2>
+            <h2 className="heading">Basic Information</h2>
             <div className="content">
                 <ul className="list-unstyled">
                     {basicInfo && basicInfo.map(inf => {

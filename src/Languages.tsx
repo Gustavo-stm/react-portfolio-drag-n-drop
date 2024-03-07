@@ -9,7 +9,7 @@ function Languages() {
     ]
 
     return (<aside className="languages aside section">
-        <div className="section-inner shadow-sm rounded">
+        <div className="section-inner">
             <h2 className="heading">Languages</h2>
             <div className="content">
                 <ul id="language-list" className="list-unstyled">

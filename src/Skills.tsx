@@ -1,22 +1,45 @@
+import { useEffect, useRef, useState } from 'react'
+
+
 function Skills() {
 
-    const skills = [{ name: "Javascript", level: 90 },
-    { name: "Python", level: 80 },
-    { name: "HTML/CSS", level: 70 },
-    { name: "SQL/NoSQL", level: 70 },
-    { name: "React", level: 70 }]
+    const [skillRefs, setskillRefs] = useState([
+        useRef<HTMLDivElement>(null),
+        useRef<HTMLDivElement>(null),
+        useRef<HTMLDivElement>(null),
+        useRef<HTMLDivElement>(null),
+        useRef<HTMLDivElement>(null),
+    ])
+
+    const skills = [{ name: "Javascript", level: 90, ref: skillRefs[0] },
+    { name: "Python", level: 80, ref: skillRefs[1] },
+    { name: "HTML/CSS", level: 70, ref: skillRefs[2] },
+    { name: "SQL/NoSQL", level: 70, ref: skillRefs[3] },
+    { name: "React", level: 70, ref: skillRefs[4] }]
+
+    useEffect(() => {
+
+        skills.forEach((skill, i) => {
+            let skillLevel = 0
+            let widthInterval = setInterval(() => {
+                skillLevel += 5
+                skill.ref.current.style.width = skillLevel + "%"
+                skillLevel >= skill.level ? clearInterval(widthInterval) : null
+            }, 30)
+        })
+    }, [skills])
 
     return (<aside className="skills aside section">
         <div className="section-inner">
             <h2 className="heading">Skills</h2>
             <div className="content">
                 <div id="skillset" className="skillset">
-                    {skills.map(skill => {
+                    {skills.map((skill, i) => {
                         return (
                             <div key={skill.name} className="item">
                                 <h3 className="level-title">{skill.name}</h3>
                                 <div className="level-bar progress">
-                                    <span className="progress-bar-value" style={{ backgroundColor: "lightgreen", width: skill.level + "%", borderRadius: '20px' }} id={skill.name}></span>
+                                    <span className="progress-bar-value" ref={skillRefs[i]} style={{ backgroundColor: "lightgreen", width: skill.level + "%", borderRadius: '20px' }} id={skill.name}></span>
                                 </div>
                             </div>)
                     })}

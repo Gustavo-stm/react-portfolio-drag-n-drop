@@ -1,7 +1,8 @@
+import foreign from "./assets/images/foreign.png"
 function Testimonials() {
 
     return (<aside className="testimonials aside section">
-        <div className="section-inner shadow-sm rounded">
+        <div className="section-inner">
             <h2 className="heading">Testimonials</h2>
             <div className="content">
                 <div className="item">
@@ -14,7 +15,7 @@ function Testimonials() {
 
                 <p><a className="more-link"
                     href="https://www.linkedin.com/in/gustavo-catala-sverdrup-40128427/"><img
-                        className="external-link" src="./assets/images/foreign.png" />More on
+                        className="external-link" src={foreign} />More on
                     Linkedin</a></p>
 
             </div>
