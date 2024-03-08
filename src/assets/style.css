@@ -1,5 +1,17 @@
 :root {
     --lightgrey: rgb(158, 157, 157);
+
+    & h1 {
+        font-size: xx-large;
+    }
+
+    & h2 {
+        font-size: larger;
+    }
+
+    & h3 {
+        font-size: large;
+    }
 }
 
 
@@ -231,9 +243,9 @@ input:checked+.slider:before {
             & .drag-me {
                 display: block;
                 width: 100%;
-                background-color: rgb(190, 188, 188);
+                background-color: rgb(243, 243, 243);
                 animation: 3s blinking infinite;
-                font-weight: bold;
+                font-weight: bolder;
                 color: green;
             }
         }

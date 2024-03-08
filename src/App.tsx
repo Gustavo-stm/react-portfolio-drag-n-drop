@@ -39,10 +39,11 @@ const App: React.FC<AppProps> = () => {
   function handleDragEnd(event: any) {
 
     let deltaY = event.delta.y
-
+    let draggableFinalIndex: number;
     let contHeight = 1000
+
     if (deltaY < 0) {
-      let draggableFinalIndex: number;
+
       let diff = contHeight + deltaY
 
       let newIndexes = [...indexes]
@@ -58,7 +59,7 @@ const App: React.FC<AppProps> = () => {
     }
 
     else {
-      let draggableFinalIndex: number;
+
       let diff = contHeight - deltaY
       let newIndexes = [...indexes]
 
