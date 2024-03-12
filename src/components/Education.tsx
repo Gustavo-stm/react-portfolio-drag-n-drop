@@ -1,7 +1,21 @@
+import { useDraggable } from '@dnd-kit/core'
+import { CSS } from '@dnd-kit/utilities';
+
 function Education() {
 
-    return (<aside className="education aside section">
-        <div className="section-inner">
+    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+        id: 1,
+        data: {
+            supports: 'type4',
+        },
+    });
+
+    const style: React.CSSProperties = {
+        transform: CSS.Translate.toString(transform),
+    };
+
+    return (<aside style={style} ref={setNodeRef} className="education aside section">
+        <div {...listeners} {...attributes} className="section-inner">
             <h2 className="heading">Education</h2>
             <div className="content">
                 <div className="item">

@@ -2,7 +2,21 @@ import locationimg from "../assets/images/location.png"
 import emailImg from '../assets/images/email.png'
 import linkimg from '../assets/images/link.png'
 
+import { useDraggable } from '@dnd-kit/core'
+import { CSS } from '@dnd-kit/utilities';
+
 function BasicInfo() {
+
+    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+        id: 1,
+        data: {
+            supports: 'type4',
+        },
+    });
+
+    const style: React.CSSProperties = {
+        transform: CSS.Translate.toString(transform),
+    };
 
     const basicInfo = [<li key={0}><img style={{ width: '14px', height: '14px', marginRight: '20px' }} src={locationimg} /><span className="sr-only">Location:</span>
         Malmö, SWE</li>,
@@ -11,8 +25,8 @@ function BasicInfo() {
     <li key={2}><img style={{ width: '14px', height: '14px', marginRight: '20px' }} src={linkimg} /><span className="sr-only">Website:</span><a
         href="#">https://catala-sverdrup.se</a></li>]
 
-    return (<aside className="pers-info aside section">
-        <div className="section-inner">
+    return (<aside style={style} ref={setNodeRef} className="pers-info aside section">
+        <div {...listeners} {...attributes} className="section-inner">
             <h2 className="heading">Basic Information</h2>
             <div className="content">
                 <ul className="list-unstyled">

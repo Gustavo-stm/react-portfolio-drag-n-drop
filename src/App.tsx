@@ -1,12 +1,14 @@
 
 import { DndContext, useDroppable, DragOverlay } from '@dnd-kit/core'
 import {
-  restrictToVerticalAxis
+  restrictToVerticalAxis,
+  restrictToHorizontalAxis
 } from '@dnd-kit/modifiers';
 
 import './assets/style.css'
 
 import React, { useState } from 'react';
+import ContainerOne from './components/ContainerOne'
 import About from './components/About';
 import Latest from './components/Latest';
 import Experience from './components/Experience';
@@ -23,17 +25,34 @@ type AppProps = {};
 const App: React.FC<AppProps> = () => {
 
   const [activeId, setActiveId] = useState<number | null>(null);
+  const [secondActiveId, setSecondActiveId] = useState<number | null>(null);
+  const [containerActiveId, setContainerActiveId] = useState<number | null>(null);
   const [items, setItems] = useState<React.ReactNode[]>([<About />, <Latest />, <Experience />])
+  const [secondItems, setSecondItems] = useState<React.ReactNode[]>([<BasicInfo />, <Skills />, <Testimonials />, <Education />, <Languages />])
+
   const [indexes, setIndexes] = useState<number[]>([0, 1, 2])
+  const [secondIndexes, setSecondIndexes] = useState<number[]>([0, 1, 2, 3, 4])
+
   const { setNodeRef } = useDroppable({
     id: 'droppable',
     data: {
-      type: 'type3',
+      type: 'type1',
     },
   });
 
+  function handleContainerDragEnd(event: any) {
+
+    console.log(event)
+  }
+
+  function handleContainerDragStart(event: any) {
+    console.log(event)
+    setContainerActiveId(event.active.id);
+  }
+
   function handleDragStart(event: any) {
     setActiveId(event.active.id);
+
   }
 
   function handleDragEnd(event: any) {
@@ -42,12 +61,17 @@ const App: React.FC<AppProps> = () => {
     let draggableFinalIndex: number;
     let contHeight = 1000
 
+    let theIndexes = event.active.data.current.supports === 'type3' ?
+      indexes :
+      secondIndexes
+
+    let newIndexes = [...theIndexes]
+
     if (deltaY < 0) {
 
       let diff = contHeight + deltaY
 
-      let newIndexes = [...indexes]
-      indexes.forEach((ind, i) => {
+      theIndexes.forEach((ind, i) => {
         if (ind + 1 === activeId) {
           newIndexes.splice(i, 1)
           draggableFinalIndex = diff > 600 ? i : diff > 400 ? i - 1 : i - 2
@@ -55,15 +79,19 @@ const App: React.FC<AppProps> = () => {
         }
       })
 
-      setIndexes(newIndexes)
+      if (event.active.data.current.supports === 'type3') {
+        setIndexes(newIndexes)
+      }
+      else {
+        setSecondIndexes(newIndexes)
+      }
     }
 
     else {
 
       let diff = contHeight - deltaY
-      let newIndexes = [...indexes]
 
-      indexes.forEach((ind, i) => {
+      theIndexes.forEach((ind, i) => {
         if (ind + 1 === activeId) {
           newIndexes.splice(i, 1)
           draggableFinalIndex = diff > 600 ? i : diff > 400 ? i + 1 : i + 2
@@ -71,8 +99,17 @@ const App: React.FC<AppProps> = () => {
         }
       })
 
-      setIndexes(newIndexes)
+      if (event.active.data.current.supports === 'type3') {
+        setIndexes(newIndexes)
+      }
+      else {
+        setSecondIndexes(newIndexes)
+      }
     }
+  }
+
+  const handleSecondStart = (event: any) => {
+    setSecondActiveId(event.active.id);
   }
 
   return (
@@ -80,27 +117,21 @@ const App: React.FC<AppProps> = () => {
       <Header />
       <div className="main-container sections-wrapper">
         <div className="row" >
-          <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-            <div className="first-sections" id="drag-container" ref={setNodeRef}>
+          <DndContext modifiers={[restrictToHorizontalAxis]} onDragStart={handleContainerDragStart} onDragEnd={handleContainerDragEnd}>
+            <ContainerOne items={items} indexes={indexes} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} />
+            <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={handleSecondStart} onDragEnd={handleDragEnd}>
+              <div style={{ padding: '30px' }} className="aside-sections" ref={setNodeRef}>
 
-              {indexes && indexes.map((ind) => { return items[ind] })
-              }
-              <DragOverlay>
-                {indexes && indexes.map((ind) => {
-                  if (ind === (activeId - 1)) return items[ind]
-                })
+                {secondIndexes && secondIndexes.map((ind) => { return secondItems[ind] })
                 }
-              </DragOverlay>
-            </div>
-          </DndContext>
-          <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-            <div className="aside-sections">
-              <BasicInfo />
-              <Skills />
-              <Testimonials />
-              <Education />
-              <Languages />
-            </div>
+                {/* <DragOverlay>
+                  {secondIndexes && secondIndexes.map((ind) => {
+                    if (ind === (secondActiveId - 1)) return secondItems[ind]
+                  })
+                  }
+                </DragOverlay> */}
+              </div>
+            </DndContext>
           </DndContext>
         </div >
       </div>
