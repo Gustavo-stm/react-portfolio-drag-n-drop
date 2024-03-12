@@ -1,5 +1,5 @@
 import { useDraggable } from '@dnd-kit/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ContainerOneChildContext from './ContainerOneChildContext'
 import { CSS } from '@dnd-kit/utilities';
 
@@ -12,9 +12,15 @@ function ContainerOne({ containerIndexes, handleDragStart, handleDragEnd, items,
         },
     });
 
+
     const style = {
         transform: CSS.Translate.toString(transform),
     };
+
+    useEffect(() => {
+        console.log(indexes)
+        console.log(items)
+    }, [indexes])
     return (
         <div style={{ ...style, padding: '30px', backgroundColor: 'lightgrey' }} ref={setNodeRef}>
             <ContainerOneChildContext containerIndexes={containerIndexes} listeners={{ ...listeners }} attributes={{ ...attributes }} items={items} indexes={indexes} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} />

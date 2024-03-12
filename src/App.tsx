@@ -76,6 +76,7 @@ const App: React.FC<AppProps> = () => {
     let draggableFinalIndex: number;
     let contHeight = 1000
 
+    console.log(event)
     let theIndexes = event.active.data.current.supports === 'type3' ?
       indexes :
       secondIndexes
@@ -109,12 +110,13 @@ const App: React.FC<AppProps> = () => {
       theIndexes.forEach((ind, i) => {
         if (ind + 1 === activeId) {
           newIndexes.splice(i, 1)
-          draggableFinalIndex = diff > 600 ? i : diff > 400 ? i + 1 : i + 2
+          draggableFinalIndex = diff > 400 ? i : diff > 200 ? i + 1 : i + 2
           newIndexes.splice(draggableFinalIndex, 0, ind)
         }
       })
 
       if (event.active.data.current.supports === 'type3') {
+
         setIndexes(newIndexes)
       }
       else {
@@ -128,10 +130,16 @@ const App: React.FC<AppProps> = () => {
   }
 
   useEffect(() => {
-    setContainerItems([<ContainerOne containerIndexes={containerIndexes} items={items} indexes={indexes} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} />,
-    <ContainerTwo containerIndexes={containerIndexes} secondItems={secondItems} secondIndexes={secondIndexes} handleSecondStart={handleSecondStart} handleDragEnd={handleDragEnd} />
-    ])
+
+    const randomKey1 = Math.floor(Math.random() * 100000)
+    const randomKey2 = Math.floor(Math.random() * 100000)
+    if (containerIndexes.length > 0) {
+      setContainerItems([<ContainerOne key={randomKey1} containerIndexes={containerIndexes} items={items} indexes={indexes} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} />,
+      <ContainerTwo key={randomKey2} containerIndexes={containerIndexes} secondItems={secondItems} secondIndexes={secondIndexes} handleSecondStart={handleSecondStart} handleDragEnd={handleDragEnd} />
+      ])
+    }
   }, [containerIndexes])
+
 
   return (
     <>
@@ -140,6 +148,7 @@ const App: React.FC<AppProps> = () => {
         <div className="row" >
           <DndContext modifiers={[restrictToHorizontalAxis]} onDragStart={handleContainerDragStart} onDragEnd={handleContainerDragEnd}>
             {containerIndexes && containerIndexes.map(ind => {
+
               return containerItems[ind]
             }
             )}

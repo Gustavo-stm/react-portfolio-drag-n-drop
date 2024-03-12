@@ -17,7 +17,7 @@ function ContainerTwo({ containerIndexes, handleSecondStart, handleDragEnd, seco
         transform: CSS.Translate.toString(transform),
     };
     return (
-        <div style={{ ...style, padding: '30px', backgroundColor: 'salmon' }} ref={setNodeRef}>
+        <div style={{ ...style, padding: '30px', backgroundColor: 'lightgrey' }} ref={setNodeRef}>
             <ContainerTwoChildContext containerIndexes={containerIndexes} listeners={{ ...listeners }} attributes={{ ...attributes }}
                 secondItems={secondItems} secondIndexes={secondIndexes}
                 handleSecondStart={handleSecondStart} handleDragEnd={handleDragEnd} />

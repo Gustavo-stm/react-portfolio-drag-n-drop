@@ -227,7 +227,8 @@ input:checked+.slider:before {
     max-width: 100vw;
 }
 
-.first-sections {
+.first-sections,
+.extra-sections-styles {
 
     width: 100%;
     padding-top: 20px;
@@ -450,7 +451,8 @@ input:checked+.slider:before {
 
 /*ASIDE SECTIONS */
 
-.aside-sections {
+.aside-sections,
+.extra-aside-styles {
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -648,7 +650,8 @@ footer {
         padding: 10px;
     }
 
-    .first-sections {
+    .first-sections,
+    .extra-sections-styles {
         display: grid;
         gap: 30px;
 
@@ -679,7 +682,8 @@ footer {
         }
     }
 
-    .aside-sections {
+    .aside-sections,
+    .extra-aside-styles {
 
         & aside {
             width: 90% !important;
@@ -700,7 +704,8 @@ footer {
         grid-template-columns: 45% 45%;
     }
 
-    .first-sections {
+    .first-sections,
+    .extra-sections-styles {
         gap: 30px;
         display: grid;
         height: fit-content;
@@ -795,76 +800,79 @@ footer {
     .main-container .row {
         display: grid;
         width: 100%;
-        grid-template-columns: 70% 30%;
+        grid-template-columns: 65% 30%;
         justify-content: space-around;
 
-        & .first-sections {
+        & .first-sections,
+        .extra-sections-styles {
             width: 100%;
             height: fit-content;
             display: grid;
             justify-content: center;
             gap: 30px;
             grid-template-columns: repeat(2, 45%);
-        }
 
-        & .first-sections .about,
-        .first-sections .latest,
-        .first-sections .experience {
-            grid-column: span 2;
-            width: 95%;
-        }
 
-        & .first-sections section:last-child {
-            grid-column: span 2;
-        }
-
-        & section .secondary {
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(2, 45%);
-            justify-content: space-evenly;
-            gap: 20px;
-
-            & .item {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                overflow-y: hidden;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-between;
-                border: 1px solid lightgrey;
-                border-radius: 5px;
+            & .about,
+            .latest,
+            .experience {
+                grid-column: span 2;
+                width: 95%;
             }
 
-            & .item .desc {
-                text-align: center;
-                height: 50%;
-                width: 90%;
+            & section:last-child {
+                grid-column: span 2;
             }
 
-            & .item a {
-                text-align: center;
-                display: inline-block;
-                height: 50%;
-                width: 100%;
+            & section .secondary {
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: repeat(2, 45%);
+                justify-content: space-evenly;
+                gap: 20px;
 
-                & .project-image {
-                    margin-top: 20px;
+                & .item {
+                    width: 100%;
+                    height: 100%;
+                    margin: 0;
+                    overflow-y: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: space-between;
+                    border: 1px solid lightgrey;
+                    border-radius: 5px;
+                }
+
+                & .item .desc {
+                    text-align: center;
+                    height: 50%;
                     width: 90%;
-                    height: 90%;
-                    object-fit: cover;
+                }
+
+                & .item a {
+                    text-align: center;
+                    display: inline-block;
+                    height: 50%;
+                    width: 100%;
+
+                    & .project-image {
+                        margin-top: 20px;
+                        width: 90%;
+                        height: 90%;
+                        object-fit: cover;
+                    }
                 }
             }
         }
     }
 
-    & .aside-sections {
+    & .aside-sections,
+    .extra-aside-styles {
         width: 100%;
-    }
 
-    & .aside-sections aside:first-child {
-        margin-top: 20px;
+        & aside:first-child {
+            margin-top: 20px;
+        }
     }
 }
