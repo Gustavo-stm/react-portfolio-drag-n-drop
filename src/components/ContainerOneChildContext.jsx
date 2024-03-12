@@ -1,11 +1,11 @@
 
-import { DndContext, useDroppable, DragOverlay } from '@dnd-kit/core'
+import { DndContext, useDroppable } from '@dnd-kit/core'
 import {
     restrictToVerticalAxis,
 } from '@dnd-kit/modifiers';
 
 
-function ContainerOneChildContext({ items, indexes, handleDragStart, handleDragEnd }) {
+function ContainerOneChildContext({ containerIndexes, listeners, attributes, items, indexes, handleDragStart, handleDragEnd }) {
 
     const { setNodeRef } = useDroppable({
         id: 'droppable',
@@ -14,21 +14,14 @@ function ContainerOneChildContext({ items, indexes, handleDragStart, handleDragE
         },
     });
 
-    return (<>
+    return (<div {...listeners} {...attributes}>
         <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-            <div style={{ padding: '30px' }} className="first-sections" id="drag-container" ref={setNodeRef}>
-
+            <div style={{ padding: '30px' }} className={containerIndexes[0] === 0 ? 'first-sections' : 'aside-sections'} ref={setNodeRef} id="drag-container">
                 {indexes && indexes.map((ind) => { return items[ind] })
                 }
-                {/* <DragOverlay>
-        {indexes && indexes.map((ind) => {
-          if (ind === (activeId - 1)) return items[ind]
-        })
-        }
-      </DragOverlay> */}
             </div>
         </DndContext>
-    </>)
+    </div>)
 }
 
 export default ContainerOneChildContext

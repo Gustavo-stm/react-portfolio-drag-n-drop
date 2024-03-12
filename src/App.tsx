@@ -7,8 +7,9 @@ import {
 
 import './assets/style.css'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ContainerOne from './components/ContainerOne'
+import ContainerTwo from './components/ContainerTwo'
 import About from './components/About';
 import Latest from './components/Latest';
 import Experience from './components/Experience';
@@ -27,28 +28,42 @@ const App: React.FC<AppProps> = () => {
   const [activeId, setActiveId] = useState<number | null>(null);
   const [secondActiveId, setSecondActiveId] = useState<number | null>(null);
   const [containerActiveId, setContainerActiveId] = useState<number | null>(null);
+
   const [items, setItems] = useState<React.ReactNode[]>([<About />, <Latest />, <Experience />])
   const [secondItems, setSecondItems] = useState<React.ReactNode[]>([<BasicInfo />, <Skills />, <Testimonials />, <Education />, <Languages />])
+  const [containerItems, setContainerItems] = useState<React.ReactNode[]>([<ContainerOne />, <ContainerTwo />])
 
   const [indexes, setIndexes] = useState<number[]>([0, 1, 2])
   const [secondIndexes, setSecondIndexes] = useState<number[]>([0, 1, 2, 3, 4])
-
-  const { setNodeRef } = useDroppable({
-    id: 'droppable',
-    data: {
-      type: 'type1',
-    },
-  });
-
-  function handleContainerDragEnd(event: any) {
-
-    console.log(event)
-  }
+  const [containerIndexes, setContainerIndexes] = useState<number[]>([0, 1])
 
   function handleContainerDragStart(event: any) {
     console.log(event)
     setContainerActiveId(event.active.id);
   }
+
+  function handleContainerDragEnd(event: any) {
+    let deltaX = event.delta.x
+
+    if (deltaX > 0) {
+      if (containerActiveId === 0) {
+        setContainerIndexes([1, 0])
+      }
+      else {
+        setContainerIndexes([0, 1])
+      }
+    }
+
+    else {
+      if (containerActiveId === 0) {
+        setContainerIndexes([0, 1])
+      }
+      else {
+        setContainerIndexes([1, 0])
+      }
+    }
+  }
+
 
   function handleDragStart(event: any) {
     setActiveId(event.active.id);
@@ -112,26 +127,38 @@ const App: React.FC<AppProps> = () => {
     setSecondActiveId(event.active.id);
   }
 
+  useEffect(() => {
+    setContainerItems([<ContainerOne containerIndexes={containerIndexes} items={items} indexes={indexes} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} />,
+    <ContainerTwo containerIndexes={containerIndexes} secondItems={secondItems} secondIndexes={secondIndexes} handleSecondStart={handleSecondStart} handleDragEnd={handleDragEnd} />
+    ])
+  }, [containerIndexes])
+
   return (
     <>
       <Header />
       <div className="main-container sections-wrapper">
         <div className="row" >
           <DndContext modifiers={[restrictToHorizontalAxis]} onDragStart={handleContainerDragStart} onDragEnd={handleContainerDragEnd}>
-            <ContainerOne items={items} indexes={indexes} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} />
-            <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={handleSecondStart} onDragEnd={handleDragEnd}>
+            {containerIndexes && containerIndexes.map(ind => {
+              return containerItems[ind]
+            }
+            )}
+            {/* {<ContainerOne items={items} indexes={indexes} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} />
+            <ContainerTwo secondItems={secondItems} secondIndexes={secondIndexes} handleSecondStart={handleSecondStart} handleDragEnd={handleDragEnd} />
+             } */}
+            {/* <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={handleSecondStart} onDragEnd={handleDragEnd}>
               <div style={{ padding: '30px' }} className="aside-sections" ref={setNodeRef}>
 
                 {secondIndexes && secondIndexes.map((ind) => { return secondItems[ind] })
-                }
-                {/* <DragOverlay>
+                } */}
+            {/* <DragOverlay>
                   {secondIndexes && secondIndexes.map((ind) => {
                     if (ind === (secondActiveId - 1)) return secondItems[ind]
                   })
                   }
                 </DragOverlay> */}
-              </div>
-            </DndContext>
+            {/* </div>
+            </DndContext> */}
           </DndContext>
         </div >
       </div>
