@@ -5,10 +5,10 @@ import linkimg from '../assets/images/link.png'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities';
 
-function BasicInfo() {
+function BasicInfo(): JSX.Element {
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: 1,
+        id: 5,
         data: {
             supports: 'type4',
         },
@@ -25,8 +25,8 @@ function BasicInfo() {
     <li key={2}><img style={{ width: '14px', height: '14px', marginRight: '20px' }} src={linkimg} /><span className="sr-only">Website:</span><a
         href="#">https://catala-sverdrup.se</a></li>]
 
-    return (<aside style={style} ref={setNodeRef} className="pers-info aside section">
-        <div {...listeners} {...attributes} className="section-inner">
+    return (<aside style={style} {...listeners} {...attributes} className="pers-info aside section">
+        <div ref={setNodeRef} className="section-inner">
             <h2 className="heading">Basic Information</h2>
             <div className="content">
                 <ul className="list-unstyled">

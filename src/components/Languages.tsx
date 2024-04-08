@@ -1,6 +1,19 @@
 import starimg from '../assets/images/star.png'
+import { useDraggable } from '@dnd-kit/core'
+import { CSS } from '@dnd-kit/utilities';
 
 function Languages() {
+
+    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+        id: 9,
+        data: {
+            supports: 'type4',
+        },
+    });
+
+    const style: React.CSSProperties = {
+        transform: CSS.Translate.toString(transform),
+    };
 
     const languages = [{ name: "Spanish", description: "Native Spaeaker", level: 5 },
     { name: "Swedish", description: "Professional Proficency", level: 4 },
@@ -8,8 +21,8 @@ function Languages() {
     { name: "German", description: "Deep understanding", level: 3 },
     ]
 
-    return (<aside className="languages aside section">
-        <div className="section-inner">
+    return (<aside ref={setNodeRef} style={style} className="languages aside section">
+        <div className="section-inner" {...listeners} {...attributes}>
             <h2 className="heading">Languages</h2>
             <div className="content">
                 <ul id="language-list" className="list-unstyled">

@@ -4,7 +4,7 @@ import { CSS } from '@dnd-kit/utilities';
 function Education() {
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: 1,
+        id: 8,
         data: {
             supports: 'type4',
         },

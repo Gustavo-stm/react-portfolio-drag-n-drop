@@ -7,7 +7,7 @@ import {
 
 import './assets/style.css'
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ContainerOne from './components/ContainerOne'
 import ContainerTwo from './components/ContainerTwo'
 import About from './components/About';
@@ -27,7 +27,7 @@ const App: React.FC<AppProps> = () => {
 
   const [activeId, setActiveId] = useState<number | null>(null);
   const [secondActiveId, setSecondActiveId] = useState<number | null>(null);
-  const [containerActiveId, setContainerActiveId] = useState<number | null>(null);
+  const containerActiveId = useRef<number | null>(null);
 
   const [items, setItems] = useState<React.ReactNode[]>([<About />, <Latest />, <Experience />])
   const [secondItems, setSecondItems] = useState<React.ReactNode[]>([<BasicInfo />, <Skills />, <Testimonials />, <Education />, <Languages />])
@@ -38,15 +38,15 @@ const App: React.FC<AppProps> = () => {
   const [containerIndexes, setContainerIndexes] = useState<number[]>([0, 1])
 
   function handleContainerDragStart(event: any) {
-    console.log(event)
-    setContainerActiveId(event.active.id);
+    containerActiveId.current = event.active.id;
+
   }
 
   function handleContainerDragEnd(event: any) {
     let deltaX = event.delta.x
 
     if (deltaX > 0) {
-      if (containerActiveId === 0) {
+      if (containerActiveId.current === 1) {
         setContainerIndexes([1, 0])
       }
       else {
@@ -55,7 +55,7 @@ const App: React.FC<AppProps> = () => {
     }
 
     else {
-      if (containerActiveId === 0) {
+      if (containerActiveId.current === 1) {
         setContainerIndexes([0, 1])
       }
       else {
@@ -67,6 +67,7 @@ const App: React.FC<AppProps> = () => {
 
   function handleDragStart(event: any) {
     setActiveId(event.active.id);
+    console.log(event)
 
   }
 
@@ -76,7 +77,6 @@ const App: React.FC<AppProps> = () => {
     let draggableFinalIndex: number;
     let contHeight = 1000
 
-    console.log(event)
     let theIndexes = event.active.data.current.supports === 'type3' ?
       indexes :
       secondIndexes
@@ -88,9 +88,18 @@ const App: React.FC<AppProps> = () => {
       let diff = contHeight + deltaY
 
       theIndexes.forEach((ind, i) => {
-        if (ind + 1 === activeId) {
+        if (ind + 1 === activeId && event.active.data.current.supports === 'type3') {
           newIndexes.splice(i, 1)
-          draggableFinalIndex = diff > 600 ? i : diff > 400 ? i - 1 : i - 2
+
+          draggableFinalIndex = diff > 400 ? i - 2 : diff > 200 ? i - 1 : i
+          newIndexes.splice(draggableFinalIndex, 0, ind)
+        }
+        else if (ind + 5 === secondActiveId && event.active.data.current.supports === 'type4') {
+          alert(secondActiveId + ' ' + ind)
+
+          newIndexes.splice(i, 1)
+          draggableFinalIndex = diff > 900 ? i : diff > 600 ? i - 1 : diff > 500 ? i - 2 : diff > 400 ? i - 3 : i - 4
+          alert(draggableFinalIndex + ' ' + ind)
           newIndexes.splice(draggableFinalIndex, 0, ind)
         }
       })
@@ -99,6 +108,7 @@ const App: React.FC<AppProps> = () => {
         setIndexes(newIndexes)
       }
       else {
+        alert(newIndexes)
         setSecondIndexes(newIndexes)
       }
     }
@@ -108,7 +118,12 @@ const App: React.FC<AppProps> = () => {
       let diff = contHeight - deltaY
 
       theIndexes.forEach((ind, i) => {
-        if (ind + 1 === activeId) {
+        if (ind + 1 === activeId && event.active.data.current.supports === 'type3') {
+          newIndexes.splice(i, 1)
+          draggableFinalIndex = diff > 400 ? i : diff > 200 ? i + 1 : i + 2
+          newIndexes.splice(draggableFinalIndex, 0, ind)
+        }
+        else if (ind + 4 === secondActiveId && event.active.data.current.supports === 'type4') {
           newIndexes.splice(i, 1)
           draggableFinalIndex = diff > 400 ? i : diff > 200 ? i + 1 : i + 2
           newIndexes.splice(draggableFinalIndex, 0, ind)
@@ -133,12 +148,13 @@ const App: React.FC<AppProps> = () => {
 
     const randomKey1 = Math.floor(Math.random() * 100000)
     const randomKey2 = Math.floor(Math.random() * 100000)
+
     if (containerIndexes.length > 0) {
-      setContainerItems([<ContainerOne key={randomKey1} containerIndexes={containerIndexes} items={items} indexes={indexes} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} />,
-      <ContainerTwo key={randomKey2} containerIndexes={containerIndexes} secondItems={secondItems} secondIndexes={secondIndexes} handleSecondStart={handleSecondStart} handleDragEnd={handleDragEnd} />
+      setContainerItems([<ContainerOne key={randomKey1} containerIndexes={containerIndexes} items={items} containerActiveId={containerActiveId} indexes={indexes} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} />,
+      <ContainerTwo key={randomKey2} containerIndexes={containerIndexes} secondItems={secondItems} containerActiveId={containerActiveId} secondIndexes={secondIndexes} handleSecondStart={handleSecondStart} handleDragEnd={handleDragEnd} />
       ])
     }
-  }, [containerIndexes])
+  }, [containerIndexes, indexes, secondIndexes])
 
 
   return (
@@ -152,22 +168,7 @@ const App: React.FC<AppProps> = () => {
               return containerItems[ind]
             }
             )}
-            {/* {<ContainerOne items={items} indexes={indexes} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} />
-            <ContainerTwo secondItems={secondItems} secondIndexes={secondIndexes} handleSecondStart={handleSecondStart} handleDragEnd={handleDragEnd} />
-             } */}
-            {/* <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={handleSecondStart} onDragEnd={handleDragEnd}>
-              <div style={{ padding: '30px' }} className="aside-sections" ref={setNodeRef}>
 
-                {secondIndexes && secondIndexes.map((ind) => { return secondItems[ind] })
-                } */}
-            {/* <DragOverlay>
-                  {secondIndexes && secondIndexes.map((ind) => {
-                    if (ind === (secondActiveId - 1)) return secondItems[ind]
-                  })
-                  }
-                </DragOverlay> */}
-            {/* </div>
-            </DndContext> */}
           </DndContext>
         </div >
       </div>

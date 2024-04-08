@@ -11,9 +11,9 @@ function ContainerTwoChildContext({ containerIndexes, listeners, attributes, sec
     const [stylesClass, setStyleClass] = useState('')
 
     const { setNodeRef } = useDroppable({
-        id: 'droppable',
+        id: 'droppable2',
         data: {
-            type: 'type3',
+            type: 'type4',
         },
     });
 

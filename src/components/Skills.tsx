@@ -13,7 +13,7 @@ function Skills() {
     ])
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: 1,
+        id: 6,
         data: {
             supports: 'type4',
         },
@@ -29,17 +29,7 @@ function Skills() {
     { name: "SQL/NoSQL", level: 70, ref: skillRefs[3] },
     { name: "React", level: 70, ref: skillRefs[4] }]
 
-    // useEffect(() => {
 
-    //     skills.forEach((skill, i) => {
-    //         let skillLevel = 0
-    //         let widthInterval = setInterval(() => {
-    //             skillLevel += 5
-    //             skill.ref.current.style.width = skillLevel + "%"
-    //             skillLevel >= skill.level ? clearInterval(widthInterval) : null
-    //         }, 30)
-    //     })
-    // }, [skills])
 
     return (<aside style={style} ref={setNodeRef} className="skills aside section">
         <div {...listeners} {...attributes} className="section-inner">
@@ -50,7 +40,7 @@ function Skills() {
                         return (
                             <div key={skill.name} className="item">
                                 <h3 className="level-title">{skill.name}</h3>
-                                <div className="level-bar progress">
+                                <div className="level-bar progress" style={{ zIndex: 10 }}>
                                     <span className="progress-bar-value" ref={skillRefs[i]} style={{ backgroundColor: "lightgreen", width: skill.level + "%", borderRadius: '20px' }} id={skill.name}></span>
                                 </div>
                             </div>)

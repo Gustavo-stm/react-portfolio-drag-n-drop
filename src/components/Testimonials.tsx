@@ -6,7 +6,7 @@ import { CSS } from '@dnd-kit/utilities';
 function Testimonials() {
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: 1,
+        id: 7,
         data: {
             supports: 'type4',
         },
