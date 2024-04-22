@@ -4,9 +4,17 @@ import {
     restrictToVerticalAxis,
 } from '@dnd-kit/modifiers';
 
+type ContainerTwoChild = {
+    containerIndexes: any
+    listeners: any
+    attributes: any
+    secondItems: any
+    secondIndexes: any
+    handleSecondStart: any
+    handleDragEnd: any
+}
 
-
-function ContainerTwoChildContext({ containerIndexes, listeners, attributes, secondItems, secondIndexes, handleSecondStart, handleDragEnd }) {
+const ContainerTwoChildContext: React.FC<ContainerTwoChild> = ({ containerIndexes, listeners, attributes, secondItems, secondIndexes, handleSecondStart, handleDragEnd }): JSX.Element => {
 
     const [stylesClass, setStyleClass] = useState('')
 
@@ -26,7 +34,7 @@ function ContainerTwoChildContext({ containerIndexes, listeners, attributes, sec
     return (<div {...listeners} {...attributes}>
         <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={handleSecondStart} onDragEnd={handleDragEnd}>
             <div style={{ padding: '30px' }} className={stylesClass} id="aside-sections" ref={setNodeRef}>
-                {secondIndexes && secondIndexes.map((ind) => { return secondItems[ind] })
+                {secondIndexes && secondIndexes.map((ind: any) => { return secondItems[ind] })
                 }
             </div>
         </DndContext>

@@ -1,14 +1,13 @@
 
-import { DndContext, useDroppable, DragOverlay } from '@dnd-kit/core'
+import { DndContext } from '@dnd-kit/core'
 import {
-  restrictToVerticalAxis,
   restrictToHorizontalAxis
 } from '@dnd-kit/modifiers';
 
 import './assets/style.css'
 
 import React, { useEffect, useState, useRef } from 'react';
-import ContainerOne from './components/ContainerOne'
+import ContainerOne from './components/ContainerOne.tsx'
 import ContainerTwo from './components/ContainerTwo'
 import About from './components/About';
 import Latest from './components/Latest';
@@ -22,8 +21,17 @@ import Languages from './components/Languages';
 import Footer from './Footer';
 
 type AppProps = {};
+type ContainerOneChild = {
+  containerIndexes: any
+  listeners: any
+  attributes: any
+  items: any
+  indexes: any
+  handleDragStart: any
+  handleDragEnd: any
+}
 
-const App: React.FC<AppProps> = () => {
+const App: React.FC<AppProps> = (): JSX.Element => {
 
   const [activeId, setActiveId] = useState<number | null>(null);
   const [secondActiveId, setSecondActiveId] = useState<number | null>(null);
